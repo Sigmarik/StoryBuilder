@@ -37,6 +37,8 @@ struct GameServer : public NetworkServer<Protocol> {
    protected:
     virtual void on_client_connect(NetworkServer<Protocol>::
                                        ClientId client) override {
+        assert(errno == 0);
+
         auto name = receive_from<std::string>(client);
         if (!name) return;
 

@@ -20,6 +20,9 @@ error_t parse(int key, char* arg, struct argp_state* state) {
         case 's':
             options->enable_server();
             break;
+        case 'u':
+            options->use_udp();
+            break;
         case ARGP_KEY_ARG:
         default:
             break;

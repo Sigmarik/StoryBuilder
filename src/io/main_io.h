@@ -26,6 +26,7 @@ enum OptCodeKey {
 static const argp_option PARSER_OPTIONS[] = {
     {"owl", OPT_OWL, NULL, 0, "Lets the owls out"},
     {"server", 's', NULL, 0, "Runs the program in server mode"},
+    {"udp", 'u', NULL, 0, "Forces the program to use UDP"},
     {}  // <-- NULL-terminator
 };
 
@@ -33,8 +34,12 @@ struct Options {
     void enable_server() { server_ = true; }
     bool is_server() const { return server_; }
 
+    bool is_udp() const { return udp_; }
+    void use_udp() { udp_ = true; }
+
    private:
     bool server_ = false;
+    bool udp_ = false;
 };
 
 /**

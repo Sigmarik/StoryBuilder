@@ -20,6 +20,8 @@
 
 #define MAIN
 
+#include <ctime>
+
 #include "client.h"
 #include "config.h"
 #include "server.h"
@@ -27,6 +29,8 @@
 
 int main(const int argc, char** argv) {
     atexit(log_end_program);
+
+    srand(std::time(0));
 
     Options options;
 
@@ -40,9 +44,17 @@ int main(const int argc, char** argv) {
     }
 
     if (options.is_server()) {
-        as_server<NetworkProtocol::TCP>();
+        if (options.is_udp()) {
+            as_server<NetworkProtocol::UDP>();
+        } else {
+            as_server<NetworkProtocol::TCP>();
+        }
     } else {
-        as_client<NetworkProtocol::TCP>();
+        if (options.is_udp()) {
+            as_client<NetworkProtocol::UDP>();
+        } else {
+            as_client<NetworkProtocol::TCP>();
+        }
     }
 
     return errno == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
