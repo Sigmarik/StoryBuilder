@@ -40,9 +40,9 @@ int main(const int argc, char** argv) {
     }
 
     if (options.is_server()) {
-        as_server();
+        as_server<NetworkProtocol::TCP>();
     } else {
-        as_client();
+        as_client<NetworkProtocol::TCP>();
     }
 
     return errno == 0 ? EXIT_SUCCESS : EXIT_FAILURE;

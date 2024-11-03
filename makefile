@@ -31,7 +31,7 @@ CPP_SANITIZER_FLAGS = -fcheck-new 													\
 
 CPP_DEBUG_FLAGS = -D _DEBUG -ggdb3
 
-CPPFLAGS = $(CPP_BASE_FLAGS) $(CPP_DEBUG_FLAGS)
+CPPFLAGS = $(CPP_BASE_FLAGS) $(CPP_DEBUG_FLAGS) $(CPP_SANITIZER_FLAGS)
 
 BOLD = \\033[1m
 STYLE_RESET = \\033[0m
@@ -95,7 +95,7 @@ run: asset $(BLD_FOLDER)/$(MAIN_BLD_FULL_NAME)
 	@cd $(BLD_FOLDER) && exec ./$(MAIN_BLD_FULL_NAME) $(ARGS)
 
 debug: asset $(BLD_FOLDER)/$(MAIN_BLD_FULL_NAME)
-	@cd $(BLD_FOLDER) && gdb ./$(MAIN_BLD_FULL_NAME) $(ARGS)
+	@cd $(BLD_FOLDER) && gdb --args ./$(MAIN_BLD_FULL_NAME) $(ARGS)
 
 install-gtest:
 	sudo apt-get install libgtest-dev

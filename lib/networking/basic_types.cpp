@@ -13,6 +13,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
+#include <iostream>
 #include <string>
 
 #include "basic_interface.h"
@@ -89,6 +90,7 @@ TCP_RECEIVER(std::string) {
     if (!length) return {};
 
     char* buffer = new char[*length + 1];
+    buffer[*length] = 0;
     bool success = recv_raw(buffer, *length, 0);
     std::string result = buffer;
     delete[] buffer;
@@ -196,6 +198,7 @@ UDP_RECEIVER(std::string) {
 
     size_t chunk_count = get_chunk_count(*length);
     char* buffer = new char[*length + 1];
+    buffer[*length] = 0;
 
     for (size_t chunk_id = 0; chunk_id < chunk_count; ++chunk_id) {
         size_t start = UDP_OPTIMAL_SIZE * chunk_id;

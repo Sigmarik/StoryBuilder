@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <arpa/inet.h>
+#include <assert.h>
 #include <errno.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
@@ -30,6 +32,7 @@ template <NetworkProtocol Protocol>
 struct NetworkConnection {
     NetworkConnection() = default;
     virtual ~NetworkConnection() {
+        assert(errno == 0);
         if (close_on_destroy_) close(sock_);
     }
 
@@ -80,15 +83,16 @@ ssize_t sys_recv(int sock_fd, void* buf, size_t len, int flags,
 template <NetworkProtocol Protocol>
 inline bool NetworkConnection<Protocol>::
     send_raw(const void* buffer, size_t len, int flags) {
+    assert(errno == 0);
+
     if (dead_) return false;
-    if (errno != 0) return false;
 
     sys_send<Protocol>(sock_, buffer, len, flags, conn_addr_);
 
     if (errno == 0) return true;
 
     if (should_die()) {
-        dead_ = true;
+        die();
     }
 
     errno = 0;
@@ -99,8 +103,9 @@ inline bool NetworkConnection<Protocol>::
 template <NetworkProtocol Protocol>
 inline bool NetworkConnection<Protocol>::
     recv_raw(void* buffer, size_t len, int flags) {
+    assert(errno == 0);
+
     if (dead_) return false;
-    if (errno != 0) return false;
 
     sys_recv<Protocol>(sock_, buffer, len, flags, conn_addr_);
 

@@ -11,4 +11,7 @@
 
 #pragma once
 
+#include "networking/protocols.h"
+
+template <NetworkProtocol Protocol>
 int as_client();
