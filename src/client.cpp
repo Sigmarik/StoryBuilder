@@ -36,20 +36,4 @@ static in_addr_t get_address() {
     return address;
 }
 
-int as_client() {
-    int sock = socket(AF_INET, SOCK_STREAM, 0);
-
-    sockaddr_in server_address;
-    server_address.sin_family = AF_INET;
-    server_address.sin_port = htons(CONN_PORT);
-    server_address.sin_addr.s_addr = get_address();
-
-    connect(sock, (sockaddr*)&server_address, sizeof(server_address));
-
-    // TODO: Implement...
-    while (1);
-
-    close(sock);
-
-    return 0;
-}
+int as_client() { return 0; }

@@ -10,7 +10,7 @@ CPP_BASE_FLAGS = $(CPP_INCLUDE_FLAGS)												\
 -Waggressive-loop-optimizations -Wc++14-compat -Wmissing-declarations				\
 -Wcast-align -Wchar-subscripts -Wconditionally-supported							\
 -Wconversion -Wctor-dtor-privacy -Wempty-body -Wformat-nonliteral					\
--Wformat-security -Wformat-signedness -Wformat=2 -Wlogical-op						\
+-Wformat-security -Wformat-signedness -Wformat=2									\
 -Wnon-virtual-dtor -Wopenmp-simd -Woverloaded-virtual -Wpacked -Wpointer-arith		\
 -Winit-self -Wredundant-decls -Wshadow -Wsign-conversion -Wsign-promo				\
 -Wstrict-null-sentinel -Wstrict-overflow=2 -Wsuggest-attribute=noreturn				\

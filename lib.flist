@@ -1,4 +1,7 @@
 lib/logger/debug.o
 lib/logger/logger.o
 
-
+lib/networking/basic_client.o
+lib/networking/basic_server.o
+lib/networking/basic_interface.o
+lib/networking/basic_types.o
