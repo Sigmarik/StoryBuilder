@@ -30,7 +30,7 @@
 int main(const int argc, char** argv) {
     atexit(log_end_program);
 
-    srand(std::time(0));
+    srand((unsigned)std::time(0));
 
     Options options;
 

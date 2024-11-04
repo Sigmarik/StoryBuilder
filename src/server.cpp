@@ -39,7 +39,8 @@ struct GameServer : public NetworkServer<Protocol> {
                                        ClientId client) override {
         assert(errno == 0);
 
-        auto name = receive_from<std::string>(client);
+        auto name = GameServer<Protocol>::
+            template receive_from<std::string>(client);
         if (!name) return;
 
         players_[client] = *name;
@@ -119,10 +120,13 @@ void GameServer<Protocol>::start_round() {
 template <NetworkProtocol Protocol>
 void GameServer<Protocol>::gather_replies() {
     for (auto& [player_id, player_name] : players_) {
-        send_to<std::string>(player_id, story_[story_.size() - 2]);
-        send_to<std::string>(player_id, story_[story_.size() - 1]);
+        GameServer<Protocol>::
+            template send_to<std::string>(player_id, story_[story_.size() - 2]);
+        GameServer<Protocol>::
+            template send_to<std::string>(player_id, story_[story_.size() - 1]);
 
-        auto reply = receive_from<std::string>(player_id);
+        auto reply = GameServer<Protocol>::
+            template receive_from<std::string>(player_id);
 
         if (!reply) continue;
 
@@ -135,10 +139,12 @@ void GameServer<Protocol>::gather_replies() {
 template <NetworkProtocol Protocol>
 void GameServer<Protocol>::reveal_story() {
     for (auto& [player_id, player_name] : players_) {
-        send_to<uint32_t>(player_id, (uint32_t)story_.size());
+        GameServer<Protocol>::
+            template send_to<uint32_t>(player_id, (uint32_t)story_.size());
 
         for (const std::string& part : story_) {
-            send_to<std::string>(player_id, part);
+            GameServer<Protocol>::
+                template send_to<std::string>(player_id, part);
         }
     }
 }
